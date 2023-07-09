@@ -1,37 +1,46 @@
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.sql.SQLOutput;
 import java.util.*;
 
 public class Main {
 
-    static ArrayList<String> list = new ArrayList<>();
-    static HashSet<String> hashSet = new HashSet<>();
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        int num = Integer.parseInt(br.readLine());
+
+        int n = Integer.parseInt(br.readLine());
+        List<String> list = new ArrayList<>();
+
+        for(int i=0; i<n; i++){
+            list.add(br.readLine());
+        }
+
+
+        Set<String> set = new HashSet<String>(list);
+        List<String> newList = new ArrayList<String>(set);
+
         Comparator<String> c = new Comparator<String>() {
             @Override
             public int compare(String o1, String o2) {
-                if(o1.length()==o2.length()){
+                if (o1.length()==o2.length()){
                     return o1.compareTo(o2);
                 }
                 else{
                     return o1.length()-o2.length();
                 }
+
             }
         };
 
-        for(int i=0;i<num;i++){
-            list.add(br.readLine());
-        }
-        Set<String> set= new HashSet<>(list);
-        List<String> newlist = new ArrayList<>(set);
+        Collections.sort(newList,c);
 
-       Collections.sort(newlist,c);
-
-        for(String s : newlist){
+        for (String s:newList
+             ) {
             System.out.println(s);
+            
         }
+
+
     }
 }

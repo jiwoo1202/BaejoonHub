@@ -1,65 +1,59 @@
-import java.util.Scanner;
-import java.util.Stack;
- 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.lang.reflect.Array;
+import java.util.*;
+
 public class Main {
-	public static void main(String[] args) {
-		Scanner in = new Scanner(System.in);
- 
-		String s;
-		
-		while(true) {		
-			s = in.nextLine();
-			
-			if(s.equals(".")) {	// 종료 조건문 
-				break;
-			}		
-			System.out.println(solve(s));
-		}
-	
-	}
-	
-	public static String solve(String s) {
-		
-		Stack<Character> stack = new Stack<>();
-		
-		for(int i = 0; i < s.length(); i++) {
-			
-			char c = s.charAt(i);	// i 번째 문자 
-			
-			if(c == '(' || c == '[') {
-				stack.push(c);
-			}
-			
 
-			else if(c == ')') {
-				
-				if(stack.empty() || stack.peek() != '(') {
-					return "no";
-				}
-				else {
-					stack.pop();
-				}
-			}
-			
-			else if(c == ']') {
-		
-				if(stack.empty() || stack.peek() != '[') {
-					return "no";
-				}
-				else {
-					stack.pop();
-				}
-			}
-			
+    static Stack<Character> stack = new Stack<>();
+    static String result;
+    public static void main(String[] args) throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        while (true){
+            String str = br.readLine();
+            if(str.equals(".")){
+                break;
+            }
+            else{
+                find(str);
+            }
+        }
+    }
 
-		}
-		
-		if(stack.empty()) {
-			return "yes";
-		}
-		else {
-			return "no";
-		}
-	}
- 
+    static void find(String str){
+        stack.clear();
+        for(int i=0;i<str.length();i++){
+            char c = str.charAt(i);
+
+            if(c=='('||c=='['){
+                stack.push(c);
+            }
+
+            else if(c==')'){
+                if(!stack.isEmpty()&&stack.peek()=='('){
+                    stack.pop();
+                }
+                else {
+                   stack.push(c);
+                }
+            }
+
+            else if(c==']'){
+                if(!stack.isEmpty()&&stack.peek()=='['){
+                    stack.pop();
+                }
+                else {
+                   stack.push(c);
+                }
+            }
+        }
+        if(stack.isEmpty()&&str.charAt(str.length()-1)=='.'){
+            result = "yes";
+        }
+        else{
+            result = "no";
+        }
+        System.out.println(result);
+    }
 }

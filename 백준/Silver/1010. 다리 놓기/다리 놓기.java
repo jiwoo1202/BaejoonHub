@@ -1,29 +1,36 @@
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.lang.reflect.Array;
 import java.util.*;
-import java.io.*;
 
 public class Main {
-    private final static int MAX = 30;
+    static int test,n,m;
+    static int[][] arr;
     public static void main(String[] args) throws IOException {
-        BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
-        int testCase = Integer.parseInt(reader.readLine());
-        int[][] dp = new int[MAX + 1][MAX + 1];
-            
-        for (int i = 1; i <= MAX; i++) {
-            dp[i][1] = i;
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        arr = new int[30][30];
+        for(int i=0;i<30;i++){
+            arr[i][i] =1;
+            arr[i][0] =1;
         }
-
-        for (int j = 2; j <= MAX; j++) {
-            for (int k = 2; k <= MAX; k++) {
-                dp[j][k] = dp[j - 1][k - 1] + dp[j - 1][k];
+        /// 어처피 1이면 경우의 수는 하나니깐
+        for(int i=2;i<30;i++){
+            for(int j=1;j<30;j++){
+                arr[i][j] = arr[i-1][j-1]+ arr[i-1][j];
             }
         }
-        
-        for (int i = 0; i < testCase; i++) {
-            int[] input = Arrays.stream(reader.readLine().split(" ")).mapToInt(Integer::parseInt).toArray();
-            int n = input[1];
-            int r = input[0];
-            
-            System.out.println(dp[n][r]);
+        StringTokenizer st = new StringTokenizer(br.readLine());
+        test = Integer.parseInt(st.nextToken());
+        StringBuilder sb = new StringBuilder();
+        for(int i=0;i<test;i++){
+            st = new StringTokenizer(br.readLine());
+            n = Integer.parseInt(st.nextToken());
+            m = Integer.parseInt(st.nextToken());
+
+            sb.append(arr[m][n]).append('\n');
         }
+        System.out.println(sb);
+
     }
 }

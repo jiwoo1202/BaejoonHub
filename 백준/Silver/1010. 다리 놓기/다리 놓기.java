@@ -15,7 +15,7 @@ public class Main {
             arr[i][0] =1;
         }
         /// 어처피 1이면 경우의 수는 하나니깐
-        for(int i=2;i<30;i++){
+        for(int i=1;i<30;i++){
             for(int j=1;j<30;j++){
                 arr[i][j] = arr[i-1][j-1]+ arr[i-1][j];
             }

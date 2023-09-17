@@ -1,40 +1,34 @@
-import java.util.Scanner;
- 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.*;
+
+
 public class Main {
-	
-	static Integer[] dp;
-	static int[] arr;
-    
-	public static void main(String[] args) {
-    
-		Scanner in = new Scanner(System.in);
-		
-		int N = in.nextInt();
-		
-		dp = new Integer[N + 1];
-		arr = new int[N + 1];
-		
-		for(int i = 1; i < N + 1; i++) {
-			arr[i] = in.nextInt();
-		}
- 
-		dp[0] = 0;
-		dp[1] = arr[1];
-		
-	
-		if(N > 1) {
-			dp[2] = arr[1] + arr[2];
-		}
-		
-		System.out.println(recur(N));
-	}
-	
-	static int recur(int N) {
-		
-		if(dp[N] == null) {
-			dp[N] = Math.max(Math.max(recur(N - 2), recur(N - 3) + arr[N - 1]) + arr[N], recur(N - 1));
-		}
-		
-		return dp[N];
-	}
+
+    static int t;
+    static int[] dp;
+    static int[] arr;
+    public static void main(String[] args) throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        StringTokenizer st = new StringTokenizer(br.readLine());
+        t = Integer.parseInt(st.nextToken());
+
+        arr = new int[t+1];
+        dp = new int[t+1];
+        for(int i=1;i<=t;i++){
+            st = new StringTokenizer(br.readLine());
+            arr[i] = Integer.parseInt(st.nextToken());
+        }
+
+        dp[1] = arr[1];
+        if(t>1){
+            dp[2] = arr[1] + arr[2];
+        }
+
+        for(int i=3;i<t+1;i++){
+            dp[i] = Math.max(dp[i-1],Math.max(dp[i-2]+arr[i],dp[i-3]+arr[i-1]+arr[i]));
+        }
+        System.out.println(dp[t]);
+    }
 }

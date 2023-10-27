@@ -1,36 +1,38 @@
-import java.util.Scanner;
-import java.util.Arrays;
-import java.util.Comparator;
- 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.*;
+
 public class Main {
-	public static void main(String[] args) {		
- 
-		Scanner in = new Scanner(System.in);
-		
-		int N = in.nextInt();
-		String[][] arr = new String[N][2];
-		
- 
-		for(int i = 0; i < N; i++) {
-			arr[i][0] = in.next();	// 나이
-			arr[i][1] = in.next();	// 이름
-		}
- 
-		
-		Arrays.sort(arr, new Comparator<String[]>() {
-			// 나이순으로 정렬
-			@Override
-			public int compare(String[] s1, String[] s2) {
-				return Integer.parseInt(s1[0]) - Integer.parseInt(s2[0]);
-			}
-			
-		});
-		
-		for(int i = 0; i < N; i++) {
-			System.out.println(arr[i][0] + " " + arr[i][1]);
-		}
-        
-		
-	}
- 
+    static int N;
+    static String[][] people;
+    public static void main(String[] args) throws IOException{
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        StringTokenizer st = new StringTokenizer(br.readLine());
+        N = Integer.parseInt(st.nextToken());
+
+        people = new String[N][2];
+
+        for(int i=0;i<N;i++){
+            st = new StringTokenizer(br.readLine());
+            people[i][0] = st.nextToken();
+            people[i][1] = st.nextToken();
+        }
+
+        /// 오름차순
+       Arrays.sort(people, new Comparator<String[]>() {
+//           @Override
+//           public int compare(String[] o1, String[] o2) {
+//               return 0;
+//           }
+           @Override
+           public int compare(String[] o1, String[] o2){
+               return Integer.parseInt(o1[0]) - Integer.parseInt(o2[0]);
+           }
+       });
+
+        for(int i = 0; i < N; i++) {
+            System.out.println(people[i][0] + " " + people[i][1]);
+        }
+    }
 }

@@ -1,60 +1,58 @@
-
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.*;
-import java.io.*;
 
 public class Main {
-	static List<List<Integer>> nodeList;
-	static int dist[];
-	static boolean visit[];
+    static int n,m,max;
+    static int[] visited;
+    static List<Integer>[] list;
+    static Queue<Integer> que = new LinkedList<>();
+    public static void main(String[] args) throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        StringTokenizer st = new StringTokenizer(br.readLine());
 
-	public static void main(String[] args) throws Exception {
-		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-		int N = Integer.parseInt(br.readLine());
-		int M = Integer.parseInt(br.readLine());
-		nodeList = new ArrayList<>();
-		for (int i = 0; i <= N; i++) {
-			nodeList.add(new ArrayList<>());
-		}
-		dist = new int[N + 1];
-		visit = new boolean[N + 1];
+        n = Integer.parseInt(st.nextToken());
+        m  = Integer.parseInt(br.readLine());
 
-		while (M-- > 0) {
-			StringTokenizer st = new StringTokenizer(br.readLine());
-			int parent = Integer.parseInt(st.nextToken());
-			int son = Integer.parseInt(st.nextToken());
+        list = new ArrayList[n+1];
+        visited = new int[n+1];
 
-			nodeList.get(parent).add(son);
-			nodeList.get(son).add(parent);
-		}
+        for(int i=1;i<=n;i++){
+            list[i] = new ArrayList<>();
+        }
+        for(int i=0;i<m;i++){
+            st = new StringTokenizer(br.readLine());
+            int a = Integer.parseInt(st.nextToken());
+            int b = Integer.parseInt(st.nextToken());
 
-		graphSearch(1);
+            list[a].add(b);
+            list[b].add(a);
+        }
+        bfs();
+        System.out.println(max);
+    }
 
-		int resultCount = 0;
-		for (int i = 2; i <= N; i++) {
-			if (dist[i] <= 3 && dist[i] > 0) {
-				resultCount++;
-			}
-		}
+   static public void bfs(){
+        que.add(1);
+        visited[1]++;
+        while (!que.isEmpty()){
+            int next = que.poll(); // 1
 
-		System.out.print(resultCount);
-	} // End of main
+            ///친구의 친구까지
+            if(visited[next]>=3){
+                break;
+            }
+                //2 3
+            for(int i : list[next]){
+                if(visited[i]==0){
+                    visited[i] = visited[next]+1;
+                    que.add(i);
+                 
+                    max ++;
+                }
+            }
+        }
 
-	private static void graphSearch(int startNum) {
-		Queue<Integer> que = new LinkedList<>();
-		que.offer(startNum);
-		dist[startNum] = 1;
-
-		while (!que.isEmpty()) {
-			int num = que.poll();
-
-			for (int friendNum : nodeList.get(num)) {
-				if(dist[friendNum] == 0) {
-					dist[friendNum] = dist[num] + 1;
-					que.offer(friendNum);
-				}
-			}
-
-		}
-
-	} // End of graphSearch
-} 
+    }
+}

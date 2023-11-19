@@ -1,17 +1,29 @@
 import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.StringTokenizer;
+import java.util.*;
+
 
 public class Main {
-    private void solution() throws Exception {
-        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        String s = br.readLine();
-        StringTokenizer st1 = new StringTokenizer(s, "0");
-        StringTokenizer st0 = new StringTokenizer(s, "1");
-        System.out.println(Math.min(st1.countTokens(), st0.countTokens()));
-    }
 
-    public static void main(String[] args) throws Exception {
-        new Main().solution();
+    static String S;
+    static int result = 0;
+    public static void main(String[] args) throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        S= br.readLine(); // 7
+        int one = 0;
+        int zero  = 0;
+
+        for(int i=1;i<S.length();i++){
+            if(S.charAt(i)!=S.charAt(i-1)){
+                    if(S.charAt(i)=='1'){
+                        one ++;
+                    }
+                    else{
+                        zero ++;
+                    }
+                }
+        }
+        System.out.println(Math.max(one,zero));
     }
 }
